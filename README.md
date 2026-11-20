@@ -1,9 +1,10 @@
 # qa-karate
 
-Pruebas de API con Karate (DSL Gherkin, un solo JAR, sin Maven) contra el staging de Tactical Calendar.
-Los mismos 17 casos `TC-API01..17` que Newman y Bruno: RLS anónimo (11) y visibilidad por rol (6,
-tag `@auth`, se omiten sin `QA_PASSWORD`).
+Pruebas de API con Karate (DSL Gherkin) contra el staging de Tactical Calendar.
+Los mismos 57 casos `TC-API01..58` que Newman y Bruno, un `.feature` por suite (a-auth … i-normas) en `features/`.
+Los casos con login llevan el tag `@auth` y se omiten sin `QA_PASSWORD`; las sesiones de los usuarios QA se calculan una vez
+por ejecución (`features/sessions.feature`).
 
-    QA_PASSWORD=... ./run.sh     # descarga .karate/karate.jar si falta y escribe result.json
+    SUITE=a-auth,b-eventos QA_PASSWORD=... ./run.sh     # sin SUITE ejecuta las 9; escribe result.json
 
-Requisitos: Java 17+ y Node 22 (solo para convertir el informe al formato del lab).
+Requisitos: Java 17+, Node 22 y el CLI `karate` (2.x) o, si no está, el JAR 1.x que `run.sh` descarga.
