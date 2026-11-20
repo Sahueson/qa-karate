@@ -109,7 +109,7 @@ Feature: Tactical Calendar API (staging) · RLS y roles
     When method get
     Then status 200
     And match response == '#[_ > 0]'
-    And match each response.squad == 'MAD Irregulars'
+    And match each response contains { squad: 'MAD Irregulars' }
 
   @auth
   Scenario: TC-API14 Jugador FOE no ve partidas de MAD
@@ -122,7 +122,7 @@ Feature: Tactical Calendar API (staging) · RLS y roles
     When method get
     Then status 200
     And match response == '#[_ > 0]'
-    And match each response.squad == 'FOE'
+    And match each response contains { squad: 'FOE' }
 
   @auth
   Scenario: TC-API15 Bloqueado no ve ninguna partida

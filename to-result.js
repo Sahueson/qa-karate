@@ -3,10 +3,11 @@ const fs = require("fs");
 const path = require("path");
 const [, , dir, output] = process.argv;
 const roles = { "TC-API12": "Jugador MAD", "TC-API13": "Jugador MAD", "TC-API14": "Jugador FOE", "TC-API15": "Bloqueado", "TC-API16": "Jugador MAD", "TC-API17": "Super Admin" };
-const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json") && !f.startsWith("karate-summary"));
+const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
+const files = walk(dir).filter((f) => f.endsWith(".json") && !path.basename(f).startsWith("karate-summary"));
 const tests = [];
 for (const f of files) {
-  const features = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+  const features = JSON.parse(fs.readFileSync(f, "utf8"));
   for (const feat of Array.isArray(features) ? features : [features]) {
     for (const sc of feat.elements || []) {
       if (sc.type === "background") continue;
