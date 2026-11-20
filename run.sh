@@ -11,10 +11,11 @@ ALL="a-auth,b-eventos,c-inscripciones,d-asistencia,e-gobernanza,f-excedencias,g-
 SUITE=$(printf %s "${SUITE:-$ALL}" | tr -cd 'a-z0-9,-')
 export SUITE
 rm -rf target result.json
-features=()
-IFS=',' read -ra list <<< "$SUITE"
-for s in "${list[@]}"; do [ -f "features/$s.feature" ] && features+=("features/$s.feature"); done
 run() {
+  # la lista se calcula aquí dentro: los arrays de Bash no sobreviven a `export -f` + `bash -c run`
+  local features=()
+  IFS=',' read -ra list <<< "$SUITE"
+  for s in "${list[@]}"; do [ -f "features/$s.feature" ] && features+=("features/$s.feature"); done
   if command -v karate >/dev/null 2>&1; then
     karate run -f '~html,cucumber:json' -o target "${features[@]}" || true
   else
