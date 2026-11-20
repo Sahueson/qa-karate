@@ -24,7 +24,8 @@ run() {
       mkdir -p .karate
       curl -fsSL -o .karate/karate.jar "https://github.com/karatelabs/karate/releases/download/v${KV}/karate-${KV}.jar"
     fi
-    java -jar .karate/karate.jar -f '~html,cucumber:json' -o target "${features[@]}" || true
+    # classpath con la carpeta actual (classpath:features/... y helpers) + el JAR standalone
+    java -cp ".karate/karate.jar:." com.intuit.karate.Main -f '~html,cucumber:json' -o target "${features[@]}" || true
   fi
   node to-result.js target result.json
 }
