@@ -12,6 +12,8 @@ Feature: g-jugadores · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/profiles?select=squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"hasSquads":["MAD Irregulars","FOE"]}, responseStatus, response)
     Then match err == ''
 
@@ -23,6 +25,8 @@ Feature: g-jugadores · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/profiles?select=nickname,squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"nonEmpty":true,"eachEq":{"path":"squad","value":"MAD Irregulars"}}, responseStatus, response)
     Then match err == ''
 
@@ -34,6 +38,8 @@ Feature: g-jugadores · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/profiles?select=nickname&nickname=eq.QA%20Jugador%20MAD', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
@@ -45,8 +51,11 @@ Feature: g-jugadores · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
-    And request {"app_role":"admin"}
+    * def reqBody = {"app_role":"admin"}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/profiles?id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
@@ -58,8 +67,11 @@ Feature: g-jugadores · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
-    And request {"is_blocked":true}
+    * def reqBody = {"is_blocked":true}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/profiles?id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 

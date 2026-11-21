@@ -8,6 +8,8 @@ Feature: i-normas · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/team_documents?select=id'
     And header apikey = anonKey
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/team_documents?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
@@ -19,6 +21,8 @@ Feature: i-normas · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/team_documents?select=id,squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"isArray":true}, responseStatus, response)
     Then match err == ''
 
@@ -29,8 +33,11 @@ Feature: i-normas · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/team_documents'
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
-    And request {"squad":"MAD Irregulars","category":"bof","title":"QA","file_url":"x","file_path":"x"}
+    * def reqBody = {"squad":"MAD Irregulars","category":"bof","title":"QA","file_url":"x","file_path":"x"}
+    And request reqBody
     When method post
+    * def ev = ({ request: { method: 'POST', url: baseUrl + '/rest/v1/team_documents', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -43,6 +50,8 @@ Feature: i-normas · API del staging (RLS y roles)
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
     When method delete
+    * def ev = ({ request: { method: 'DELETE', url: baseUrl + '/rest/v1/team_documents?id=not.is.null&select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
@@ -50,6 +59,8 @@ Feature: i-normas · API del staging (RLS y roles)
     Given url baseUrl + '/storage/v1/object/public/team-documents/qa-no-existe.pdf'
     And header apikey = anonKey
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/storage/v1/object/public/team-documents/qa-no-existe.pdf', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[400,404]}, responseStatus, response)
     Then match err == ''
 
@@ -57,6 +68,8 @@ Feature: i-normas · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/keep_alive?select=id&id=eq.1'
     And header apikey = anonKey
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/keep_alive?select=id&id=eq.1', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"nonEmpty":true}, responseStatus, response)
     Then match err == ''
 

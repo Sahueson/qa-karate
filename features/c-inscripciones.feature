@@ -8,14 +8,19 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/event_registrations?select=id'
     And header apikey = anonKey
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/event_registrations?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
   Scenario: TC-C02 Anónimo no se inscribe
     Given url baseUrl + '/rest/v1/event_registrations'
     And header apikey = anonKey
-    And request {"event_id":"00000000-0000-0000-0000-000000000000","profile_id":"00000000-0000-0000-0000-000000000000","team":"x","role":"y"}
+    * def reqBody = {"event_id":"00000000-0000-0000-0000-000000000000","profile_id":"00000000-0000-0000-0000-000000000000","team":"x","role":"y"}
+    And request reqBody
     When method post
+    * def ev = ({ request: { method: 'POST', url: baseUrl + '/rest/v1/event_registrations', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -27,6 +32,8 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/event_registrations?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
@@ -38,6 +45,8 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/event_registrations?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
@@ -49,6 +58,8 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/event_registrations?select=id,events(squad)', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"eachEq":{"path":"events.squad","value":"MAD Irregulars"}}, responseStatus, response)
     Then match err == ''
 
@@ -61,6 +72,8 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
     When method delete
+    * def ev = ({ request: { method: 'DELETE', url: baseUrl + '/rest/v1/event_registrations?profile_id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 

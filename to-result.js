@@ -14,6 +14,10 @@ for (const f of files) {
       const steps = sc.steps || [];
       const bad = steps.find((s) => s.result && s.result.status === "failed");
       const ms = Math.round(steps.reduce((a, s) => a + ((s.result && s.result.duration) || 0), 0) / 1e6);
+      let evidence;
+      for (const st of steps) for (const em of st.embeddings || []) {
+        if (em.mime_type === "application/json") { try { evidence = JSON.parse(Buffer.from(em.data, "base64").toString("utf8")); } catch { /* embebido no legible */ } }
+      }
       const auth = (sc.tags || []).some((t) => t.name === "@auth");
       // Sin QA_PASSWORD los escenarios @auth hacen karate.abort(): para el lab son "omitidos".
       const skipped = !bad && auth && !process.env.QA_PASSWORD;
@@ -24,6 +28,7 @@ for (const f of files) {
         role: roles[sc.name.split(" ")[0]] || "Anónimo",
         error: bad ? bad.result.error_message : null,
         evidence_url: null,
+        evidence_data: evidence,
       });
     }
   }

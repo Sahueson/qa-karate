@@ -8,14 +8,19 @@ Feature: b-eventos · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/events?select=id'
     And header apikey = anonKey
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/events?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
   Scenario: TC-B02 Anónimo no crea partidas
     Given url baseUrl + '/rest/v1/events'
     And header apikey = anonKey
-    And request {"title":"x","date":"2030-01-01","hour":"10:00","field":"x"}
+    * def reqBody = {"title":"x","date":"2030-01-01","hour":"10:00","field":"x"}
+    And request reqBody
     When method post
+    * def ev = ({ request: { method: 'POST', url: baseUrl + '/rest/v1/events', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -23,6 +28,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/events?id=not.is.null'
     And header apikey = anonKey
     When method delete
+    * def ev = ({ request: { method: 'DELETE', url: baseUrl + '/rest/v1/events?id=not.is.null', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -34,6 +41,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/events?select=id,squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"nonEmpty":true,"eachEq":{"path":"squad","value":"MAD Irregulars"}}, responseStatus, response)
     Then match err == ''
 
@@ -45,6 +54,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/events?select=id,squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"nonEmpty":true,"eachEq":{"path":"squad","value":"FOE"}}, responseStatus, response)
     Then match err == ''
 
@@ -56,6 +67,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/events?select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
@@ -66,8 +79,11 @@ Feature: b-eventos · API del staging (RLS y roles)
     Given url baseUrl + '/rest/v1/events'
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
-    And request {"title":"QA intrusa","squad":"FOE","date":"2030-01-01","hour":"10:00","field":"x","event_type":"normal"}
+    * def reqBody = {"title":"QA intrusa","squad":"FOE","date":"2030-01-01","hour":"10:00","field":"x","event_type":"normal"}
+    And request reqBody
     When method post
+    * def ev = ({ request: { method: 'POST', url: baseUrl + '/rest/v1/events', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -79,6 +95,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/events?select=id,squad', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"hasSquads":["MAD Irregulars","FOE"]}, responseStatus, response)
     Then match err == ''
 
@@ -90,8 +108,11 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
-    And request {"title":"hackeada"}
+    * def reqBody = {"title":"hackeada"}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/events?squad=eq.FOE&select=id', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
@@ -104,6 +125,8 @@ Feature: b-eventos · API del staging (RLS y roles)
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
     When method delete
+    * def ev = ({ request: { method: 'DELETE', url: baseUrl + '/rest/v1/events?squad=eq.FOE&select=id', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 

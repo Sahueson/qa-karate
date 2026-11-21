@@ -7,8 +7,11 @@ Feature: d-asistencia · API del staging (RLS y roles)
   Scenario: TC-D01 Anónimo no marca asistencia
     Given url baseUrl + '/rest/v1/event_registrations?attended=eq.false'
     And header apikey = anonKey
-    And request {"attended":true}
+    * def reqBody = {"attended":true}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/event_registrations?attended=eq.false', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
@@ -20,8 +23,11 @@ Feature: d-asistencia · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
-    And request {"attended":true}
+    * def reqBody = {"attended":true}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/event_registrations?profile_id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
@@ -33,8 +39,11 @@ Feature: d-asistencia · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     And header Prefer = 'return=representation'
-    And request {"attended":true}
+    * def reqBody = {"attended":true}
+    And request reqBody
     When method patch
+    * def ev = ({ request: { method: 'PATCH', url: baseUrl + '/rest/v1/event_registrations?profile_id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id', body: reqBody }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
@@ -46,6 +55,8 @@ Feature: d-asistencia · API del staging (RLS y roles)
     And header apikey = anonKey
     And header Authorization = 'Bearer ' + session.token
     When method get
+    * def ev = ({ request: { method: 'GET', url: baseUrl + '/rest/v1/event_registrations?select=id,attended', body: null }, response: { status: responseStatus, time_ms: responseTime, body: response } })
+    * karate.embed(karate.toString(ev), 'application/json')
     * def err = check({"status":[200],"isArray":true}, responseStatus, response)
     Then match err == ''
 
