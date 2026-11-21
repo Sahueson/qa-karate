@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de Karate</title>
+<style>
+:root{color-scheme:light dark;--bg:#f6f5f1;--card:#fff;--line:#e3e1da;--txt:#171717;--mut:#6b6b66}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1c1c1c;--line:#2e2e2e;--txt:#ececec;--mut:#9a9a94}}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,sans-serif}main{max-width:1000px;margin:0 auto;padding:32px 20px}
+h1{margin:0 0 4px;font-size:28px}p.sub{margin:0 0 24px;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}.kpi b{display:block;font-size:28px}.kpi span{color:var(--mut);font-size:12px}
+.kpi.hero{background:#111;color:#fff}.kpi.hero span{color:#bbb}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}tr:first-child td{border-top:0}td.num{text-align:right;white-space:nowrap;color:var(--mut)}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.passed{background:#10b98122;color:#059669}.tag.failed{background:#ef444422;color:#dc2626}.tag.skipped{background:#f59e0b22;color:#d97706}
+small{color:var(--mut)}details{margin-top:6px}summary{cursor:pointer;color:var(--mut);font-size:13px}
+pre{background:#0d0d0d;color:#d6d6d6;padding:12px;border-radius:12px;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-word}pre.err{color:#fca5a5}
+img{max-width:100%;border:1px solid var(--line);border-radius:12px;margin-top:6px}footer{margin-top:24px;color:var(--mut);font-size:12px}
+</style></head><body><main>
+<h1>Informe de Karate</h1>
+<p class="sub">Suite <strong>i-normas</strong> · tactical-calendar · 21/11/2026, 23:25:06 · 9.5 s</p>
+<section class="kpis">
+<div class="kpi hero"><b>100%</b><span>Tasa de éxito (6 de 6)</span></div>
+<div class="kpi"><b>6</b><span>Pasan</span></div>
+<div class="kpi"><b>0</b><span>Fallan</span></div>
+<div class="kpi"><b>0</b><span>Omitidos</span></div>
+</section>
+<table><tbody>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I01 Anónimo no lee documentos del equipo</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/team_documents?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 878,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">1.8 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I02 Jugador MAD consulta los documentos de su equipo</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/team_documents?select=id,squad&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 177,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">6.7 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I03 Jugador MAD no sube documentos</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;POST&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/team_documents&quot;,
+    &quot;body&quot;: &quot;{\&quot;squad\&quot;:\&quot;MAD Irregulars\&quot;,\&quot;category\&quot;:\&quot;bof\&quot;,\&quot;title\&quot;:\&quot;QA\&quot;,\&quot;file_url\&quot;:\&quot;x\&quot;,\&quot;file_path\&quot;:\&quot;x\&quot;}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 403,
+    &quot;time_ms&quot;: 175,
+    &quot;body&quot;: &quot;{\&quot;code\&quot;:\&quot;42501\&quot;,\&quot;details\&quot;:null,\&quot;hint\&quot;:null,\&quot;message\&quot;:\&quot;new row violates row-level security policy for table \\\&quot;team_documents\\\&quot;\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I04 Jugador MAD no borra documentos</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;DELETE&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/team_documents?id=not.is.null&amp;select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 173,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I05 El bucket de normas es privado</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/storage/v1/object/public/team-documents/qa-no-existe.pdf&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 400,
+    &quot;time_ms&quot;: 495,
+    &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:\&quot;404\&quot;,\&quot;error\&quot;:\&quot;Bucket not found\&quot;,\&quot;message\&quot;:\&quot;Bucket not found\&quot;,\&quot;code\&quot;:\&quot;NoSuchBucket\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">0.5 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-I06 El ping keep_alive responde</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/keep_alive?select=id&amp;id=eq.1&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 174,
+    &quot;body&quot;: &quot;[{\&quot;id\&quot;:1}]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+</tbody></table>
+<footer>Generado por Ivan QA Lab. Sin claves, tokens, contraseñas, emails ni ids de usuario.</footer>
+</main></body></html>
