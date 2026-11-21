@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de Karate</title>
+<style>
+:root{color-scheme:light dark;--bg:#f6f5f1;--card:#fff;--line:#e3e1da;--txt:#171717;--mut:#6b6b66}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1c1c1c;--line:#2e2e2e;--txt:#ececec;--mut:#9a9a94}}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,sans-serif}main{max-width:1000px;margin:0 auto;padding:32px 20px}
+h1{margin:0 0 4px;font-size:28px}p.sub{margin:0 0 24px;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}.kpi b{display:block;font-size:28px}.kpi span{color:var(--mut);font-size:12px}
+.kpi.hero{background:#111;color:#fff}.kpi.hero span{color:#bbb}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}tr:first-child td{border-top:0}td.num{text-align:right;white-space:nowrap;color:var(--mut)}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.passed{background:#10b98122;color:#059669}.tag.failed{background:#ef444422;color:#dc2626}.tag.skipped{background:#f59e0b22;color:#d97706}
+small{color:var(--mut)}details{margin-top:6px}summary{cursor:pointer;color:var(--mut);font-size:13px}
+pre{background:#0d0d0d;color:#d6d6d6;padding:12px;border-radius:12px;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-word}pre.err{color:#fca5a5}
+img{max-width:100%;border:1px solid var(--line);border-radius:12px;margin-top:6px}footer{margin-top:24px;color:var(--mut);font-size:12px}
+</style></head><body><main>
+<h1>Informe de Karate</h1>
+<p class="sub">Suite <strong>f-excedencias</strong> · tactical-calendar · 21/11/2026, 23:22:27 · 14.3 s</p>
+<section class="kpis">
+<div class="kpi hero"><b>100%</b><span>Tasa de éxito (5 de 5)</span></div>
+<div class="kpi"><b>5</b><span>Pasan</span></div>
+<div class="kpi"><b>0</b><span>Fallan</span></div>
+<div class="kpi"><b>0</b><span>Omitidos</span></div>
+</section>
+<table><tbody>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-F01 Anónimo no crea excedencias</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;POST&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/player_leaves&quot;,
+    &quot;body&quot;: &quot;{\&quot;profile_id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;start_date\&quot;:\&quot;2030-01-01\&quot;,\&quot;end_date\&quot;:\&quot;2030-01-10\&quot;}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 401,
+    &quot;time_ms&quot;: 1488,
+    &quot;body&quot;: &quot;{\&quot;code\&quot;:\&quot;42501\&quot;,\&quot;details\&quot;:null,\&quot;hint\&quot;:\&quot;Grant the required privileges to the current role with: GRANT INSERT ON public.player_leaves TO anon;\&quot;,\&quot;message\&quot;:\&quot;permission denied for table player_leaves\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">3.2 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-F02 Anónimo no lee excedencias</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/player_leaves?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 224,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-F03 Bloqueado no lee excedencias</strong><br><small>Bloqueado</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/player_leaves?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 228,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">10.4 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-F04 Jugador FOE consulta excedencias</strong><br><small>Jugador FOE</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/player_leaves?select=id,status&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 208,
+    &quot;body&quot;: &quot;[{\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;status\&quot;:\&quot;approved\&quot;},{\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;status\&quot;:\&quot;approved\&quot;},{\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;status\&quot;:\&quot;pending\&quot;},{\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;status\&quot;:\&quot;pending\&quot;}]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-F05 Jugador FOE no aprueba excedencias ajenas</strong><br><small>Jugador FOE</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;PATCH&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/player_leaves?profile_id=neq.&lt;id&gt;&amp;select=id&quot;,
+    &quot;body&quot;: &quot;{\&quot;status\&quot;:\&quot;approved\&quot;}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 207,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+</tbody></table>
+<footer>Generado por Ivan QA Lab. Sin claves, tokens, contraseñas, emails ni ids de usuario.</footer>
+</main></body></html>
