@@ -4,7 +4,7 @@ Feature: i-normas · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API53 Anónimo no lee documentos del equipo
+  Scenario: TC-I01 Anónimo no lee documentos del equipo
     Given url baseUrl + '/rest/v1/team_documents?select=id'
     And header apikey = anonKey
     When method get
@@ -12,7 +12,7 @@ Feature: i-normas · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API54 Jugador MAD consulta los documentos de su equipo
+  Scenario: TC-I02 Jugador MAD consulta los documentos de su equipo
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/team_documents?select=id,squad'
@@ -23,7 +23,7 @@ Feature: i-normas · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API55 Jugador MAD no sube documentos
+  Scenario: TC-I03 Jugador MAD no sube documentos
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/team_documents'
@@ -35,7 +35,7 @@ Feature: i-normas · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API56 Jugador MAD no borra documentos
+  Scenario: TC-I04 Jugador MAD no borra documentos
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/team_documents?id=not.is.null&select=id'
@@ -46,14 +46,14 @@ Feature: i-normas · API del staging (RLS y roles)
     * def err = check({"blocked":true}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API57 El bucket de normas es privado
+  Scenario: TC-I05 El bucket de normas es privado
     Given url baseUrl + '/storage/v1/object/public/team-documents/qa-no-existe.pdf'
     And header apikey = anonKey
     When method get
     * def err = check({"status":[400,404]}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API58 El ping keep_alive responde
+  Scenario: TC-I06 El ping keep_alive responde
     Given url baseUrl + '/rest/v1/keep_alive?select=id&id=eq.1'
     And header apikey = anonKey
     When method get

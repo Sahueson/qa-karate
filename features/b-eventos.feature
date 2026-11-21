@@ -4,14 +4,14 @@ Feature: b-eventos · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API01 Anónimo no ve partidas (RLS)
+  Scenario: TC-B01 Anónimo no ve partidas (RLS)
     Given url baseUrl + '/rest/v1/events?select=id'
     And header apikey = anonKey
     When method get
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API06 Anónimo no crea partidas
+  Scenario: TC-B02 Anónimo no crea partidas
     Given url baseUrl + '/rest/v1/events'
     And header apikey = anonKey
     And request {"title":"x","date":"2030-01-01","hour":"10:00","field":"x"}
@@ -19,7 +19,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API08 Anónimo no borra partidas
+  Scenario: TC-B03 Anónimo no borra partidas
     Given url baseUrl + '/rest/v1/events?id=not.is.null'
     And header apikey = anonKey
     When method delete
@@ -27,7 +27,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API13 Jugador MAD solo ve partidas de su equipo
+  Scenario: TC-B04 Jugador MAD solo ve partidas de su equipo
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/events?select=id,squad'
@@ -38,7 +38,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API14 Jugador FOE no ve partidas de MAD
+  Scenario: TC-B05 Jugador FOE no ve partidas de MAD
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/events?select=id,squad'
@@ -49,7 +49,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API15 Bloqueado no ve ninguna partida
+  Scenario: TC-B06 Bloqueado no ve ninguna partida
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.blocked
     Given url baseUrl + '/rest/v1/events?select=id'
@@ -60,7 +60,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API16 Jugador MAD no crea partidas en FOE
+  Scenario: TC-B07 Jugador MAD no crea partidas en FOE
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/events'
@@ -72,7 +72,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API17 Super admin ve partidas de ambos equipos
+  Scenario: TC-B08 Super admin ve partidas de ambos equipos
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.superadmin
     Given url baseUrl + '/rest/v1/events?select=id,squad'
@@ -83,7 +83,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API22 Jugador FOE no edita partidas
+  Scenario: TC-B09 Jugador FOE no edita partidas
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/events?squad=eq.FOE&select=id'
@@ -96,7 +96,7 @@ Feature: b-eventos · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API23 Admin MAD no borra partidas de FOE
+  Scenario: TC-B10 Admin MAD no borra partidas de FOE
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.admin_mad
     Given url baseUrl + '/rest/v1/events?squad=eq.FOE&select=id'

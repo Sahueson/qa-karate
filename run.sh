@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Ejecuta suites de Karate (un .feature por suite) contra el staging y escribe result.json (formato del lab).
-#   SUITE=a-auth[,b-eventos...]  GREP='TC-API01 Anónimo…|TC-API02 …' (opcional)  ./run.sh
+#   SUITE=a-auth[,b-eventos...]  GREP='TC-A01 Anónimo…|TC-A02 …' (opcional)  ./run.sh
 # Usa el CLI `karate` (2.x) si está instalado; si no, el JAR standalone .karate/karate.jar
 # (se descarga solo: KARATE_VERSION, 1.5.1 por defecto). Necesita Java 17+ y Node 22.
 # GREP filtra los resultados por nombre de caso (to-result.js); SUITE elige los .feature a ejecutar.

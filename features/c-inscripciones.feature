@@ -4,14 +4,14 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API02 Anónimo no ve inscripciones (RLS)
+  Scenario: TC-C01 Anónimo no ve inscripciones (RLS)
     Given url baseUrl + '/rest/v1/event_registrations?select=id'
     And header apikey = anonKey
     When method get
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API24 Anónimo no se inscribe
+  Scenario: TC-C02 Anónimo no se inscribe
     Given url baseUrl + '/rest/v1/event_registrations'
     And header apikey = anonKey
     And request {"event_id":"00000000-0000-0000-0000-000000000000","profile_id":"00000000-0000-0000-0000-000000000000","team":"x","role":"y"}
@@ -20,7 +20,7 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API25 Usuario sin equipo no ve inscripciones
+  Scenario: TC-C03 Usuario sin equipo no ve inscripciones
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.sinequipo
     Given url baseUrl + '/rest/v1/event_registrations?select=id'
@@ -31,7 +31,7 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API26 Bloqueado no ve inscripciones
+  Scenario: TC-C04 Bloqueado no ve inscripciones
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.blocked
     Given url baseUrl + '/rest/v1/event_registrations?select=id'
@@ -42,7 +42,7 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API27 Jugador MAD solo ve inscripciones de partidas de MAD
+  Scenario: TC-C05 Jugador MAD solo ve inscripciones de partidas de MAD
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/event_registrations?select=id,events(squad)'
@@ -53,7 +53,7 @@ Feature: c-inscripciones · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API28 Jugador FOE no cancela inscripciones ajenas
+  Scenario: TC-C06 Jugador FOE no cancela inscripciones ajenas
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/event_registrations?profile_id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id'

@@ -5,7 +5,7 @@ Feature: g-jugadores · API del staging (RLS y roles)
     * def check = read('helpers/check.js')
 
   @auth
-  Scenario: TC-API43 Super admin ve perfiles de ambos equipos
+  Scenario: TC-G01 Super admin ve perfiles de ambos equipos
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.superadmin
     Given url baseUrl + '/rest/v1/profiles?select=squad'
@@ -16,7 +16,7 @@ Feature: g-jugadores · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API44 Jugador MAD solo ve perfiles de su unidad
+  Scenario: TC-G02 Jugador MAD solo ve perfiles de su unidad
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/profiles?select=nickname,squad'
@@ -27,7 +27,7 @@ Feature: g-jugadores · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API45 Jugador FOE no ve perfiles de MAD
+  Scenario: TC-G03 Jugador FOE no ve perfiles de MAD
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/profiles?select=nickname&nickname=eq.QA%20Jugador%20MAD'
@@ -38,7 +38,7 @@ Feature: g-jugadores · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API46 Jugador MAD no cambia el rol de otros
+  Scenario: TC-G04 Jugador MAD no cambia el rol de otros
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/profiles?id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id'
@@ -51,7 +51,7 @@ Feature: g-jugadores · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API47 Jugador MAD no bloquea a otros
+  Scenario: TC-G05 Jugador MAD no bloquea a otros
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/profiles?id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id'

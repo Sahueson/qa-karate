@@ -4,14 +4,14 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API03 Anónimo no ve votaciones FOE (RLS)
+  Scenario: TC-E01 Anónimo no ve votaciones FOE (RLS)
     Given url baseUrl + '/rest/v1/foe_polls?select=id'
     And header apikey = anonKey
     When method get
     * def err = check({"status":[200],"empty":true}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API04 Anónimo no ve faltas FOE (RLS)
+  Scenario: TC-E02 Anónimo no ve faltas FOE (RLS)
     Given url baseUrl + '/rest/v1/foe_infractions?select=id'
     And header apikey = anonKey
     When method get
@@ -19,7 +19,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API33 Jugador MAD no ve votaciones FOE
+  Scenario: TC-E03 Jugador MAD no ve votaciones FOE
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/foe_polls?select=id'
@@ -30,7 +30,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API34 Jugador FOE sin cargo no ve votaciones de la Junta
+  Scenario: TC-E04 Jugador FOE sin cargo no ve votaciones de la Junta
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/foe_polls?select=id'
@@ -41,7 +41,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API35 Admin FOE de la Junta ve las votaciones
+  Scenario: TC-E05 Admin FOE de la Junta ve las votaciones
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.admin_foe
     Given url baseUrl + '/rest/v1/foe_polls?select=id,board'
@@ -52,7 +52,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API36 Jugador MAD no ve faltas FOE
+  Scenario: TC-E06 Jugador MAD no ve faltas FOE
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/foe_infractions?select=id'
@@ -63,7 +63,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API37 Jugador FOE no crea votaciones
+  Scenario: TC-E07 Jugador FOE no crea votaciones
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/foe_polls'
@@ -75,7 +75,7 @@ Feature: e-gobernanza · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API38 Jugador FOE no borra votaciones
+  Scenario: TC-E08 Jugador FOE no borra votaciones
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/foe_polls?id=not.is.null&select=id'

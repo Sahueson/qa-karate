@@ -4,7 +4,7 @@ Feature: f-excedencias · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API07 Anónimo no crea excedencias
+  Scenario: TC-F01 Anónimo no crea excedencias
     Given url baseUrl + '/rest/v1/player_leaves'
     And header apikey = anonKey
     And request {"profile_id":"00000000-0000-0000-0000-000000000000","start_date":"2030-01-01","end_date":"2030-01-10"}
@@ -12,7 +12,7 @@ Feature: f-excedencias · API del staging (RLS y roles)
     * def err = check({"status":[401,403]}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API39 Anónimo no lee excedencias
+  Scenario: TC-F02 Anónimo no lee excedencias
     Given url baseUrl + '/rest/v1/player_leaves?select=id'
     And header apikey = anonKey
     When method get
@@ -20,7 +20,7 @@ Feature: f-excedencias · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API40 Bloqueado no lee excedencias
+  Scenario: TC-F03 Bloqueado no lee excedencias
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.blocked
     Given url baseUrl + '/rest/v1/player_leaves?select=id'
@@ -31,7 +31,7 @@ Feature: f-excedencias · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API41 Jugador FOE consulta excedencias
+  Scenario: TC-F04 Jugador FOE consulta excedencias
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/player_leaves?select=id,status'
@@ -42,7 +42,7 @@ Feature: f-excedencias · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API42 Jugador FOE no aprueba excedencias ajenas
+  Scenario: TC-F05 Jugador FOE no aprueba excedencias ajenas
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_foe
     Given url baseUrl + '/rest/v1/player_leaves?profile_id=neq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=id'

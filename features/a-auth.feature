@@ -4,13 +4,13 @@ Feature: a-auth · API del staging (RLS y roles)
     * url baseUrl
     * def check = read('helpers/check.js')
 
-  Scenario: TC-API10 Sin apikey se rechaza
+  Scenario: TC-A01 Sin apikey se rechaza
     Given url baseUrl + '/rest/v1/events?select=id'
     When method get
     * def err = check({"status":[401]}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API11 Login con contraseña incorrecta falla
+  Scenario: TC-A02 Login con contraseña incorrecta falla
     Given url baseUrl + '/auth/v1/token?grant_type=password'
     And header apikey = anonKey
     And request {"email":"qa.player.mad@example.com","password":"contraseña-incorrecta"}
@@ -19,7 +19,7 @@ Feature: a-auth · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API12 Login correcto devuelve token
+  Scenario: TC-A03 Login correcto devuelve token
     * if (!qaPassword) karate.abort()
     Given url baseUrl + '/auth/v1/token?grant_type=password'
     And header apikey = anonKey
@@ -28,7 +28,7 @@ Feature: a-auth · API del staging (RLS y roles)
     * def err = check({"status":[200],"token":true}, responseStatus, response)
     Then match err == ''
 
-  Scenario: TC-API05 Anónimo no lee perfiles
+  Scenario: TC-A04 Anónimo no lee perfiles
     Given url baseUrl + '/rest/v1/profiles?select=id'
     And header apikey = anonKey
     When method get
@@ -36,7 +36,7 @@ Feature: a-auth · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API18 Jugador MAD lee su propio perfil
+  Scenario: TC-A05 Jugador MAD lee su propio perfil
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/profiles?select=nickname,app_role&id=eq.' + (typeof session !== 'undefined' ? session.uid : '') + ''
@@ -47,7 +47,7 @@ Feature: a-auth · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API19 Bloqueado lee su perfil y figura bloqueado
+  Scenario: TC-A06 Bloqueado lee su perfil y figura bloqueado
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.blocked
     Given url baseUrl + '/rest/v1/profiles?select=nickname,is_blocked&id=eq.' + (typeof session !== 'undefined' ? session.uid : '') + ''
@@ -58,7 +58,7 @@ Feature: a-auth · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API20 Usuario sin equipo no ve partidas
+  Scenario: TC-A07 Usuario sin equipo no ve partidas
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.sinequipo
     Given url baseUrl + '/rest/v1/events?select=id'
@@ -69,7 +69,7 @@ Feature: a-auth · API del staging (RLS y roles)
     Then match err == ''
 
   @auth
-  Scenario: TC-API21 Un jugador no se asciende a super admin
+  Scenario: TC-A08 Un jugador no se asciende a super admin
     * if (!qaPassword) karate.abort()
     * def session = karate.callSingle('classpath:features/sessions.feature').sessions.player_mad
     Given url baseUrl + '/rest/v1/profiles?id=eq.' + (typeof session !== 'undefined' ? session.uid : '') + '&select=app_role,is_super_admin'
