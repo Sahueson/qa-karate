@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de Karate</title>
+<style>
+:root{color-scheme:light dark;--bg:#f6f5f1;--card:#fff;--line:#e3e1da;--txt:#171717;--mut:#6b6b66}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1c1c1c;--line:#2e2e2e;--txt:#ececec;--mut:#9a9a94}}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,sans-serif}main{max-width:1000px;margin:0 auto;padding:32px 20px}
+h1{margin:0 0 4px;font-size:28px}p.sub{margin:0 0 24px;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}.kpi b{display:block;font-size:28px}.kpi span{color:var(--mut);font-size:12px}
+.kpi.hero{background:#111;color:#fff}.kpi.hero span{color:#bbb}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}tr:first-child td{border-top:0}td.num{text-align:right;white-space:nowrap;color:var(--mut)}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.passed{background:#10b98122;color:#059669}.tag.failed{background:#ef444422;color:#dc2626}.tag.skipped{background:#f59e0b22;color:#d97706}
+small{color:var(--mut)}details{margin-top:6px}summary{cursor:pointer;color:var(--mut);font-size:13px}
+pre{background:#0d0d0d;color:#d6d6d6;padding:12px;border-radius:12px;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-word}pre.err{color:#fca5a5}
+img{max-width:100%;border:1px solid var(--line);border-radius:12px;margin-top:6px}footer{margin-top:24px;color:var(--mut);font-size:12px}
+</style></head><body><main>
+<h1>Informe de Karate</h1>
+<p class="sub">Suite <strong>a-auth</strong> · tactical-calendar · 21/11/2026, 23:17:49 · 13.8 s</p>
+<section class="kpis">
+<div class="kpi hero"><b>100%</b><span>Tasa de éxito (8 de 8)</span></div>
+<div class="kpi"><b>8</b><span>Pasan</span></div>
+<div class="kpi"><b>0</b><span>Fallan</span></div>
+<div class="kpi"><b>0</b><span>Omitidos</span></div>
+</section>
+<table><tbody>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A01 Sin apikey se rechaza</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/events?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 401,
+    &quot;time_ms&quot;: 780,
+    &quot;body&quot;: &quot;{\&quot;message\&quot;:\&quot;No API key found in request\&quot;,\&quot;hint\&quot;:\&quot;No `apikey` request header or url param was found.\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">1.6 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A02 Login con contraseña incorrecta falla</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;POST&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/auth/v1/token?grant_type=password&quot;,
+    &quot;body&quot;: &quot;{\&quot;email\&quot;:\&quot;***@***\&quot;,\&quot;password\&quot;:\&quot;***\&quot;}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 400,
+    &quot;time_ms&quot;: 228,
+    &quot;body&quot;: &quot;{\&quot;code\&quot;:400,\&quot;error_code\&quot;:\&quot;invalid_credentials\&quot;,\&quot;msg\&quot;:\&quot;Invalid login credentials\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">0.3 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A03 Login correcto devuelve token</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;POST&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/auth/v1/token?grant_type=password&quot;,
+    &quot;body&quot;: &quot;{\&quot;email\&quot;:\&quot;***@***\&quot;,\&quot;password\&quot;:\&quot;***\&quot;}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 440,
+    &quot;body&quot;: &quot;{\&quot;access_token\&quot;:\&quot;***\&quot;,\&quot;token_type\&quot;:\&quot;bearer\&quot;,\&quot;expires_in\&quot;:3600,\&quot;expires_at\&quot;:1795303064,\&quot;refresh_token\&quot;:\&quot;***\&quot;,\&quot;user\&quot;:{\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;aud\&quot;:\&quot;authenticated\&quot;,\&quot;role\&quot;:\&quot;authenticated\&quot;,\&quot;email\&quot;:\&quot;***@***\&quot;,\&quot;email_confirmed_at\&quot;:\&quot;2026-11-19T14:48:32.203852Z\&quot;,\&quot;phone\&quot;:\&quot;\&quot;,\&quot;confirmed_at\&quot;:\&quot;2026-11-19T14:48:32.203852Z\&quot;,\&quot;last_sign_in_at\&quot;:\&quot;2026-11-21T22:17:44.119744109Z\&quot;,\&quot;app_metadata\&quot;:{\&quot;provider\&quot;:\&quot;email\&quot;,\&quot;providers\&quot;:[\&quot;email\&quot;]},\&quot;user_metadata\&quot;:{\&quot;email_verified\&quot;:true,\&quot;nickname\&quot;:\&quot;QA Jugador MAD\&quot;},\&quot;identities\&quot;:[{\&quot;identity_id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;user_id\&quot;:\&quot;&lt;id&gt;\&quot;,\&quot;identity_data\&quot;:{\&quot;email\&quot;:\&quot;***@***\&quot;,\&quot;email_verified\&quot;:false,\&quot;phone_verified\&quot;:false,\&quot;sub\&quot;:\&quot;&lt;id&gt;\&quot;},\&quot;provider\&quot;:\&quot;email\&quot;,\&quot;last_sign_in_at\&quot;:\&quot;2026-11-19T14:48:32.201956Z\&quot;,\&quot;created_at\&quot;:\&quot;2026-11-19T14:48:32.202011Z\&quot;,\&quot;updated_at\&quot;:\&quot;2026-11-19T14:48:32.202011Z\&quot;,\&quot;email\&quot;:\&quot;***@***\&quot;}],\&quot;created_at\&quot;:\&quot;2026-11-19T14:48:32.200837Z\&quot;,\&quot;updated_at\&quot;:\&quot;2026-11-21T22:17:44.123349Z\&quot;,\&quot;is_anonymous\&quot;:false},\&quot;weak_password\&quot;:null}&quot;
+  }
+}</pre></details></td>
+<td class="num">0.5 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A04 Anónimo no lee perfiles</strong><br><small>Anónimo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/profiles?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 401,
+    &quot;time_ms&quot;: 351,
+    &quot;body&quot;: &quot;{\&quot;code\&quot;:\&quot;42501\&quot;,\&quot;details\&quot;:null,\&quot;hint\&quot;:\&quot;Grant the required privileges to the current role with: GRANT SELECT ON public.profiles TO anon;\&quot;,\&quot;message\&quot;:\&quot;permission denied for table profiles\&quot;}&quot;
+  }
+}</pre></details></td>
+<td class="num">0.4 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A05 Jugador MAD lee su propio perfil</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/profiles?select=nickname,app_role&amp;id=eq.&lt;id&gt;&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 332,
+    &quot;body&quot;: &quot;[{\&quot;nickname\&quot;:\&quot;QA Jugador MAD\&quot;,\&quot;app_role\&quot;:\&quot;player\&quot;}]&quot;
+  }
+}</pre></details></td>
+<td class="num">10.4 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A06 Bloqueado lee su perfil y figura bloqueado</strong><br><small>Bloqueado</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/profiles?select=nickname,is_blocked&amp;id=eq.&lt;id&gt;&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 140,
+    &quot;body&quot;: &quot;[{\&quot;nickname\&quot;:\&quot;QA Bloqueado\&quot;,\&quot;is_blocked\&quot;:true}]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.1 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A07 Usuario sin equipo no ve partidas</strong><br><small>Sin equipo</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/events?select=id&quot;,
+    &quot;body&quot;: null,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 363,
+    &quot;body&quot;: &quot;[]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.4 s</td></tr>
+<tr class="passed"><td><span class="tag passed">Pasa</span></td>
+<td><strong>TC-A08 Un jugador no se asciende a super admin</strong><br><small>Jugador MAD</small><details><summary>Petición y respuesta</summary><pre>{
+  &quot;request&quot;: {
+    &quot;method&quot;: &quot;PATCH&quot;,
+    &quot;url&quot;: &quot;https://rpxdxitntsmgcbbnuyox.supabase.co/rest/v1/profiles?id=eq.&lt;id&gt;&amp;select=app_role,is_super_admin&quot;,
+    &quot;body&quot;: &quot;{\&quot;app_role\&quot;:\&quot;super_admin\&quot;,\&quot;is_super_admin\&quot;:true}&quot;,
+    &quot;headers&quot;: {}
+  },
+  &quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;time_ms&quot;: 141,
+    &quot;body&quot;: &quot;[{\&quot;app_role\&quot;:\&quot;player\&quot;,\&quot;is_super_admin\&quot;:false}]&quot;
+  }
+}</pre></details></td>
+<td class="num">0.2 s</td></tr>
+</tbody></table>
+<footer>Generado por Ivan QA Lab. Sin claves, tokens, contraseñas, emails ni ids de usuario.</footer>
+</main></body></html>
